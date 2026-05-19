@@ -15,7 +15,7 @@ const app = fastify()
 app.register(mercuriusAuth, {
   authDirective: 'auth',
   async applyPolicy (authDirectiveAST, parent, args, context, info) {
-    expect(authDirectiveAST).type.toBeAssignableTo<DirectiveNode>()
+    expect(authDirectiveAST).type.toBe<any>()
     expect(parent).type.toBe<any>()
     expect(args).type.toBe<any>()
     expect(context).type.toBe<MercuriusContext>()
@@ -46,13 +46,13 @@ const authOptions: MercuriusAuthOptions = {
   filterSchema: true,
   authDirective: 'auth',
   async applyPolicy (
-    authDirectiveAST,
+    authDirectiveAST: DirectiveNode,
     parent: CustomParent,
     args: CustomArgs,
     context: CustomContext,
     info
   ) {
-    expect(authDirectiveAST).type.toBeAssignableTo<DirectiveNode>()
+    expect(authDirectiveAST).type.toBe<DirectiveNode>()
     expect(parent).type.toBe<CustomParent>()
     expect(args).type.toBe<CustomArgs>()
     expect(context).type.toBe<CustomContext>()
@@ -72,7 +72,7 @@ app.register(mercuriusAuth, authOptions)
 const authOptionsWithGenerics: MercuriusAuthOptions<CustomParent, CustomArgs, CustomContext> = {
   authDirective: 'auth',
   async applyPolicy (authDirectiveAST, parent, args, context, info) {
-    expect(authDirectiveAST).type.toBeAssignableTo<DirectiveNode>()
+    expect(authDirectiveAST).type.toBe<any>()
     expect(parent).type.toBe<CustomParent>()
     expect(args).type.toBe<CustomArgs>()
     expect(context).type.toBe<CustomContext>()
@@ -96,7 +96,7 @@ const authContext: AuthContextHandler<CustomContext> = (context) => {
 
 const applyPolicy: ApplyPolicyHandler<{}, {}, CustomContext> =
   async (authDirectiveAST, parent, args, context, info) => {
-    expect(authDirectiveAST).type.toBeAssignableTo<DirectiveNode>()
+    expect(authDirectiveAST).type.toBe<any>()
     expect(parent).type.toBe<{}>()
     expect(args).type.toBe<{}>()
     expect(context).type.toBe<CustomContext>()
